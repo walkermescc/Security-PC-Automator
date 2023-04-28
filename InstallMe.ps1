@@ -1,12 +1,23 @@
+# ------------------------------------------------- Information -------------------------------------------------
+# Title - Security PC Automator
+# Author - Vincent Walker
+# Date - 28/04/2023
+
+# ------------------------------------------------- Parameters -------------------------------------------------
+
 [CmdletBinding()]
 param (
     [Parameter(Mandatory=$true)]
     [ValidateSet("All","Standard","Minimal","Pentest","Developer")]
     [string]$PackageSet,
+    [Parameter(Mandatory=$true)]
+    [ValidateSet("Setup")]
+    [string]$VM,
     [Parameter(Mandatory=$false)]
     [switch]$Uninstall
 )
 
+# ------------------------------------------------- PackagesSets -------------------------------------------------
 $PackageSets = @{
     "All" = @("Standard","Minimal","Pentest","Developer")
     "Pentest" = @("Standard","Pentest","Wireshark","nmap", "advanced-ip-scanner","burp-suite-free-edition")
@@ -22,11 +33,16 @@ else {
     $PackageList = $PackageSets[$PackageSet]
 }
 
+# -------------------------------------------------  Virtual Box -------------------------------------------------
+
+
+# -------------------------------------------------  Install Chocolatey -------------------------------------------------
+
 ## Change Directory to User Profile
 Set-Location $env:USERPROFILE\Documents
 Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force
 
-## Install Choco
+## Install Required Applications
 if (-not (Test-Path "C:\ProgramData\chocolatey\bin\choco.exe")) {
     $script = New-Object Net.WebClient
 
@@ -36,8 +52,17 @@ if (-not (Test-Path "C:\ProgramData\chocolatey\bin\choco.exe")) {
 
     ## Upgrade Choco
 choco upgrade chocolatey
+choco feature enable -n allowGlobalConfirmation
 }
+# -------------------------------------------------  Install Python -------------------------------------------------
+# Upgrade Python 
+python -m pip install --upgrade pip
 
+# Download VirtualBox API and Extract files
+pip install virtualbox
+pip install pyvbox
+
+# -------------------------------------------------  Chocolatey Main Code -------------------------------------------------
 
 # Loop over the package names and install or uninstall each package
 
@@ -65,4 +90,5 @@ if ($Uninstall) {
     }
 }
 
-python -m pip install --upgrade pip
+# -------------------------------------------------  Python Main Code -------------------------------------------------
+
