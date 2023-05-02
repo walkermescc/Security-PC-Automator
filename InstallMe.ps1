@@ -10,7 +10,7 @@ param (
     [Parameter(Mandatory=$true)]
     [ValidateSet("All","Standard","Minimal","Pentest","Developer")]
     [string]$PackageSet,
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory=$false)]
     [ValidateSet("Setup")]
     [string]$VM,
     [Parameter(Mandatory=$false)]
@@ -20,9 +20,9 @@ param (
 # ------------------------------------------------- PackagesSets -------------------------------------------------
 $PackageSets = @{
     "All" = @("Standard","Minimal","Pentest","Developer")
-    "Pentest" = @("Standard","Pentest","Wireshark","nmap", "advanced-ip-scanner","burp-suite-free-edition")
+    "Pentest" = @("Standard","Wireshark","nmap", "advanced-ip-scanner","burp-suite-free-edition")
     "Developer" = @("python3", "nano", "filezilla", "gns3", "sysinternals", "winscp", "putty","winmerge","vscode")
-    "Standard" = @("Minimal","virtualbox","notepad++","vlc" )
+    "Standard" = @("Minimal","virtualbox","vmwareworkstation","notepad++","vlc" )
     "Minimal" = @("googlechrome", "7zip","adobereader" )
 }
 
@@ -32,10 +32,6 @@ if ($PackageSet -ne "Minimal") {
 else {
     $PackageList = $PackageSets[$PackageSet]
 }
-
-# -------------------------------------------------  Virtual Box -------------------------------------------------
-
-
 # -------------------------------------------------  Install Chocolatey -------------------------------------------------
 
 ## Change Directory to User Profile
@@ -90,5 +86,8 @@ if ($Uninstall) {
     }
 }
 
-# -------------------------------------------------  Python Main Code -------------------------------------------------
+# -------------------------------------------------  Install VMware PowerCLI -------------------------------------------------
+if (-not (Test-Path "C:\Users\Vinnie\Documents\WindowsPowerShell\Modules\VMware.PowerCLI.Sdk")) {
 
+
+}
