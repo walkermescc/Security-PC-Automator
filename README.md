@@ -1,2 +1,2 @@
-# SecuirtyPC-Automator
+# Security-PC-Automator
  
