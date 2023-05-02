@@ -1,4 +1,7 @@
 # Security-PC-Automator
+Author - Vincent Walker
+Date - 02/05/2023
+
 
 ## Initial Application
 Security PC Automator was developed with a DevSecOps approach, it's intended use is to help Devlopers and Secuirty Proffessionals install applications that could be useful for their role, it provides a easy method of installing software and using a package manager "Chocolatey". 
