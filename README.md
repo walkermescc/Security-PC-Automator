@@ -2,28 +2,28 @@
  
 This tool has been created to Automate a couple of tasks, that would have usually been manual. It will download tools depending on your choice. Please see the list below:
 
-| Application Name | Parameter |
-|------------------|-----------|
-| Wireshark        |           |
-| NMap             |           |
-| Advance IP Scanner|            |
-| Burp Suite Free Edition |            |
-| Python           |           |
-| Nano             |           |
-| Filezilla        |           |
-| GNS3             |           |
-| Sysinternals     |           |
-| WinSCP                 |           |
-| Putty                 |           |
-| WinMerge                 |           |
-| VSCode                 |           |
-| Virtualbox                 |           |
-| VMWare Workstation                 |           |
-| Notepad ++                 |           |
-| VLC                 |           |
-| Google Chrome                 |           |
-| 7-Zip                 |           |
-| Adobe Reader                 |           |
+| Application Name | All       | Standard| Minimal | Pentest| Developer|
+|------------------|-----------|----------|--------|----------|--------|
+| Wireshark        |     y      |         |        |    y      |        |
+| NMap             |     y      |         |        |    y      |        |
+| Advance IP Scanner|    y      |         |        |    y      |        |
+| Burp Suite Free Edition |  y  |         |        |    y      |        |
+| Python           |     y      |         |        |          |    y    |
+| Nano             |     y      |         |        |          |    y    |
+| Filezilla        |     y      |         |        |          |    y    |
+| GNS3             |     y      |         |        |          |    y    |
+| Sysinternals     |     y      |         |        |          |    y    |
+| WinSCP           |     y      |         |        |          |    y    |
+| Putty            |     y      |         |        |          |    y    |
+| WinMerge         |     y      |         |        |          |    y    |
+| VSCode           |     y      |         |        |          |    y    |
+| Virtualbox       |     y      |         |    y    |     y     |        |
+| VMWare Workstation|    y       |        |    y    |     y     |        |
+| Notepad ++       |     y      |         |    y    |     y     |        |
+| VLC              |     y      |         |    y    |     y     |        |
+| Google Chrome    |     y      |    y     |   y     |    y      |       |
+| 7-Zip            |     y      |    y     |   y    |     y     |       |
+| Adobe Reader     |     y      |    y     |   y     |    y      |       |
 
 
 "All" = @("Standard","Minimal","Pentest","Developer")
