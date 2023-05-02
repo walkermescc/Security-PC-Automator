@@ -1,6 +1,6 @@
-## Security-PC-Automator
+# Security-PC-Automator
 
-# Initial Application
+## Initial Application
 Security PC Automator was developed with a DevSecOps approach, it's intended use is to help Devlopers and Secuirty Proffessionals install applications that could be useful for their role, it provides a easy method of installing software and using a package manager "Chocolatey". 
  
 This tool has been created to Automate a couple of tasks, that would have usually been manual. It will download tools depending on your choice. Please see the list below:
@@ -28,5 +28,5 @@ This tool has been created to Automate a couple of tasks, that would have usuall
 | 7-Zip            |     y      |    y     |   y    |     y     |       |
 | Adobe Reader     |     y      |    y     |   y     |    y      |       |
 
-# Next Steps
+## Next Steps
 The next part of this application will help to install Virtual Machines using "Vagrant" to automate the installation of Windows Servers, Clients and Penertration VM's, with a Red Team feel to the Lab. It will be able to faciliate Ethical Hacking inside of an isolated Virtual Lab which will help any Security Professional understand the basics.
