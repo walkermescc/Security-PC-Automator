@@ -1,12 +1,40 @@
-# Set the URL of the webpage containing the link to the latest executable
+# ------------------------------------------------- Information -------------------------------------------------
+# Title - Install Vigrant Software
+# Description - Powershell driven script, that downloads and installs Vigrant and then included a uninstall switch.
+# Author - Vincent Walker
+# Date - 28/04/2023
+
+# ------------------------------------------------- Parameters -------------------------------------------------
+
+[CmdletBinding()]
+param (
+    [Parameter(Mandatory=$true)]
+    [string]$Mode
+)
+
+# ------------------------------------------------- Variables -------------------------------------------------
+
+# This is a variable for Vigrant download section.
 $url = "https://developer.hashicorp.com/vagrant/downloads"
 
-# Set the directory where you want to save the downloaded executable
+# This is the location of the temporary files.
 $downloadDirectory = "$env:APPDATA\Temp"
 
-if ($Install)
+# Log Source
+$Log = "Vigrant Script"
+
+# ------------------------------------------------- Main Code -------------------------------------------------
+if (-not (Get-EventLog -LogName "Application" -Source $Log)) {
+New-EventLog -LogName "Application" -Source $Log
+Write-Host "Eventlog required."
+}
+else {
+    Write-Host "Eventlog not required."
+}
+if ($Mode -eq "Install") {
 if (-not (Test-Path $downloadDirectory)) {
     try {
+        Write-EventLog -LogName "Application" -EventId 2028 -Source $Log -Message "Making new directory: $downloadDirectory." -InformationAction Continue
         New-Item -Path $downloadDirectory -ItemType Directory -ErrorAction Stop | Out-Null
     }
     catch {
@@ -21,6 +49,8 @@ try {
         Where-Object { $_.href -like "*.exe" -or $_.href -like "*.msi" } | 
         Select-Object -ExpandProperty href | 
         Select-Object -First 1
+        Write-EventLog -LogName "Application" -EventId 2028 -Source $Log -Message "Download URL has been generated: $executableLink" -InformationAction Continue
+
 } catch {
     Write-Error "Failed to retrieve executable link: $_"
     return
@@ -35,6 +65,8 @@ if (-not $executableLink) {
 $executablePath = Join-Path -Path $downloadDirectory -ChildPath (Split-Path -Leaf $executableLink)
 try {
     Invoke-WebRequest -Uri $executableLink -OutFile $executablePath -ErrorAction Stop
+    Write-EventLog -LogName "Application" -EventId 2028 -Source $Log -Message "Download application: $executablePath" -InformationAction Continue
+
 } catch {
     Start-Process -FilePath "msiexec.exe" -ArgumentList "/i `"$($executablePath)`" /qn /norestart" -Wait -ErrorAction Stop   
     return
@@ -52,6 +84,8 @@ if ($executablePath.EndsWith(".msi")) {
     try {
         Write-Host "Installing MSI: $executablePath"
         Start-Process -FilePath "msiexec.exe" -ArgumentList "/i `"$executablePath`" /qn /norestart" -Wait -ErrorAction Stop
+        Write-EventLog -LogName "Application" -EventId 2028 -Source $Log -Message "Install the application: $executablePath" -InformationAction Continue
+
     } catch {
         Write-Error "Failed to install MSI package '$executablePath': $_"
         return
@@ -65,11 +99,14 @@ if ($executablePath.EndsWith(".msi")) {
         return
     }
 }
-
-# Clean up the downloaded executable
-try {
-    Remove-Item -Path $executablePath -Force -ErrorAction Stop
-} catch {
-    Write-Error "Failed to remove downloaded executable '$executablePath': $_"
-    return
+}
+else {
+    if ($Mode -eq "Uninstall") {
+        # Clean up the downloaded executable
+            Write-Host "Uninstalling application: $executablePath"
+            Start-Process -FilePath "msiexec.exe" -ArgumentList "/x `"$executablePath`" /qn /norestart" -Wait -ErrorAction Stop
+            Write-Host "Remove temp file: $executablePath"
+            Remove-Item -Path $executablePath -Force -ErrorAction Stop
+            Write-EventLog -LogName "Application" -EventId 2028 -Source $Log -Message "The application Vigrant has been removed." -InformationAction Continue
+    }
 }

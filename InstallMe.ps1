@@ -54,10 +54,6 @@ choco feature enable -n allowGlobalConfirmation
 # Upgrade Python 
 python -m pip install --upgrade pip
 
-# Download VirtualBox API and Extract files
-pip install virtualbox
-pip install pyvbox
-
 # -------------------------------------------------  Chocolatey Main Code -------------------------------------------------
 
 # Loop over the package names and install or uninstall each package
